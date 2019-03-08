@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import classes from "./App.css";
 
 import Person from "./Person/Person";
 
@@ -19,7 +19,6 @@ const app = () => {
 
   const deletePersonHandler = index => {
     const updateArray = [...peopleState];
-    console.log(index);
     updateArray.splice(index, 1); // splice(index,counts) this will change the array
     setPeopleState(updateArray);
   };
@@ -30,16 +29,8 @@ const app = () => {
     setPeopleState(newArray);
   };
 
-  const style = {
-    background: "green",
-    border: "1px solid blue",
-    color: "white",
-    padding: "8px",
-    cursor: "pointer"
-  };
-
   let people = null;
-
+  let btnClass = "";
   if (showPeople === true) {
     people = peopleState.map((person, index) => {
       return (
@@ -52,25 +43,20 @@ const app = () => {
         />
       );
     });
-
-    style.background = "red";
+    btnClass = classes.Red;
   }
-
-  let classes = [];
+  let pClass = "";
   if (peopleState.length <= 2) {
-    classes.push("red");
+    pClass = classes.Red;
   }
   if (peopleState.length <= 1) {
-    classes.push("bold");
-  } //modify the className by using array,then assign .join(' ')
-
+    pClass = pClass + " " + classes.Bold;
+  }
   return (
-    <div className="App">
+    <div className={classes.App}>
       <h1>Hello I'm react app!!!</h1>
-      <p className={classes.join(" ")}>
-        this color change by the card's number
-      </p>
-      <button style={style} onClick={togglePeopleHandler}>
+      <p className={pClass}>this color change by the card's number</p>
+      <button className={btnClass} onClick={togglePeopleHandler}>
         Toggle People cards
       </button>
       {people}
