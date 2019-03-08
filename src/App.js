@@ -30,12 +30,21 @@ const app = () => {
     setPeopleState(newArray);
   };
 
+  const style = {
+    background: "green",
+    border: "1px solid blue",
+    color: "white",
+    padding: "8px",
+    cursor: "pointer"
+  };
+
   let people = null;
+
   if (showPeople === true) {
     people = peopleState.map((person, index) => {
       return (
         <Person
-          click={() => deletePersonHandler(index)}
+          click={deletePersonHandler.bind(this, index)}
           name={person.name}
           age={person.age}
           changed={event => onNameChangeHandler(event, index)}
@@ -43,12 +52,27 @@ const app = () => {
         />
       );
     });
+
+    style.background = "red";
   }
+
+  let classes = [];
+  if (peopleState.length <= 2) {
+    classes.push("red");
+  }
+  if (peopleState.length <= 1) {
+    classes.push("bold");
+  } //modify the className by using array,then assign .join(' ')
 
   return (
     <div className="App">
       <h1>Hello I'm react app!!!</h1>
-      <button onClick={togglePeopleHandler}>Toggle People cards</button>
+      <p className={classes.join(" ")}>
+        this color change by the card's number
+      </p>
+      <button style={style} onClick={togglePeopleHandler}>
+        Toggle People cards
+      </button>
       {people}
     </div>
   );
